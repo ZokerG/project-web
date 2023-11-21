@@ -44,6 +44,10 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
+    public Client findById(long id){
+        return clientRepository.findById(id).orElseThrow();
+    }
+
     public Client create(ClientRequest request){
 
         if (existsByEmail(request.getEmail())) {
@@ -73,6 +77,6 @@ public class ClientService {
         authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
         Client client = clientRepository.findByUserName(userName).orElseThrow(() -> new RuntimeException("Client not found"));
         String token = jwtService.getToken(client);
-        return LoginResponse.builder().token(token).role(client.getRole().name()).build();
+        return LoginResponse.builder().token(token).role(client.getRole().name()).name(client.getName()).id(client.getId()).build();
     }
 }

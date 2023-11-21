@@ -23,6 +23,11 @@ public class ClientController {
         return clientService.findAllClient();
     }
 
+    @GetMapping("/{id}")
+    public Client findById(@PathVariable long id){
+        return clientService.findById(id);
+    }
+
     @PostMapping
     public Client create(@RequestBody ClientRequest request) {
         return clientService.create(request);
@@ -33,8 +38,8 @@ public class ClientController {
         return clientService.findByEmail(email);
     }
 
-    @GetMapping("/login")
-    public LoginResponse login(String email, String password) {
+    @PostMapping("/signin")
+    public LoginResponse login(@RequestParam String email, @RequestParam String password) {
         return clientService.login(email, password);
     }
 }
